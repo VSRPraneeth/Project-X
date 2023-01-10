@@ -3,20 +3,17 @@ import Sidebar from "../Sidebar.jsx/Sidebar";
 import { HiMenu } from "react-icons/hi";
 import { Link, Route, Routes } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
 import { userQuery } from "../../utils/data";
 import { client } from "../../utils/client";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useRef } from "react";
 import UserProfile from "../../components/UserProfile/UserProfile";
-import Pins from "../../components/Pins/Pins";
+import Pins from "../Pins/Pins";
+import { fetchUser } from "../../utils/fetchUser";
 
 const Home = () => {
-  const userInfo =
-    localStorage.getItem("user") !== "undefined"
-      ? jwt_decode(localStorage.getItem("user"))
-      : localStorage.clear();
+  const userInfo = fetchUser();
 
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
@@ -34,8 +31,6 @@ const Home = () => {
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
   }, []);
-
-  console.log({ userInfo });
 
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transaction-height duration-75 ease-out">
